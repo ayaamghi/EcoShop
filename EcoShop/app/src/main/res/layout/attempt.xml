@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--ViewGroup1-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".MainActivity">
+
+    <!--TextView1 widget inside ViewGroup1-->
+    <TextView
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GEEKSFORGEEKS"
+        android:textColor="@color/dark_blue_grey" />
+
+    <!--TextView2 widget inside ViewGroup1-->
+    <TextView
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Enter the user information"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--ViewGroup2-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false">
+
+        <!--EditText1 widget inside ViewGroup2-->
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Enter first name" />
+
+        <!--EditText2 widget inside ViewGroup2-->
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/editText1"
+            android:hint="Enter last name" />
+
+        <!--Button widget inside ViewGroup2-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText2"
+            android:layout_alignParentEnd="true"
+            android:text="Submit" />
+
+    </RelativeLayout><!--End of ViewGroup2-->
+
+</LinearLayout><!--End of ViewGroup1-->

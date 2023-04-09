@@ -140,4 +140,14 @@ tools:context=".MainActivity">
     app:layout_constraintTop_toTopOf="@+id/Background_camera"
     app:layout_constraintVertical_bias="0.773" />
 
+    <ImageView
+        android:id="@+id/viewer"
+        android:layout_width="155dp"
+        android:layout_height="131dp"
+        app:layout_constraintBottom_toTopOf="@+id/bCapture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/previewView"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

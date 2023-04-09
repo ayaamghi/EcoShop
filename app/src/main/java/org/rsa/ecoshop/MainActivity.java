@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,7 +33,6 @@ import org.rsa.ecoshop.ml.ModelUnquant;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
     PreviewView previewView;
     private ImageCapture imageCapture;
     private Button bCapture;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
 
         previewView = findViewById(R.id.previewView);
         bCapture = findViewById(R.id.bCapture);
-
+    imageView = findViewById(R.id.viewer);
         bCapture.setOnClickListener(this);
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
                         int dimension = Math.min(image.getWidth(), image.getHeight());
                         image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
                         image = Bitmap.createScaledBitmap(image, 224, 224, false);
+                        imageView.setImageBitmap(image);
                         classifyImage(image);
                     }
 

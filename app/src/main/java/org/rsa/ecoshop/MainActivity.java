@@ -1,12 +1,20 @@
 package org.rsa.ecoshop;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
@@ -16,34 +24,18 @@ import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.lifecycle.LifecycleOwner;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.util.Size;
-import android.view.Surface;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.io.File;
-import java.net.URI;
-import java.util.Date;
+import org.rsa.ecoshop.ml.ModelUnquant;
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
@@ -52,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
 
     PreviewView previewView;
     private ImageCapture imageCapture;
-    private Button bRecord;
     private Button bCapture;
 
     @Override
@@ -106,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
         imageAnalysis.setAnalyzer(getExecutor(), this);
 
         //bind to lifecycle:
-        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
+        cameraProvider.bindToLifecycle( this, cameraSelector, preview, imageCapture);
     }
 
     @Override
@@ -123,17 +114,20 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
             case R.id.bCapture:
                 capturePhoto();
                 break;
-
-
         }
     }
 
     private void capturePhoto() {
+         final int RESULT_TAKE_PHOTO = 1;
+        Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        //   startActivityForResult(i, RESULT_TAKE_PHOTO);
+
         long timestamp = System.currentTimeMillis();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, timestamp);
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+        //contentValues.put("yes", "flaskImage");
+    //   contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, timestamp);
+        //contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
 
 
 
@@ -148,6 +142,11 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         Toast.makeText(MainActivity.this, "Photo has been saved successfully.", Toast.LENGTH_SHORT).show();
+                        Bitmap image = BitmapFactory.decodeFile(getLastImageId());
+                        int dimension = Math.min(image.getWidth(), image.getHeight());
+                        image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+                        image = Bitmap.createScaledBitmap(image, 224, 224, false);
+                        classifyImage(image);
                     }
 
                     @Override
@@ -167,12 +166,56 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
         final String imageOrderBy = MediaStore.Images.Media._ID+" DESC";
         Cursor imageCursor = managedQuery(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageColumns, null, null, imageOrderBy);
         if(imageCursor.moveToFirst()){
-            String fullPath = imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            @SuppressLint("Range") String fullPath = imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
             imageCursor.close();
             return fullPath;
         }else{
             return "";
         }
     }
+
+    private void classifyImage(Bitmap image) {
+        try {
+            ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+
+            // Creates inputs for reference.
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4*224*224*3);
+            byteBuffer.order(ByteOrder.nativeOrder());
+            int[] intValues = new int[224*224];
+            image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+            int pixel = 0;
+                    for(int i = 0; i < 224; i++) {
+                        int val = intValues[pixel++];
+                        byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f/255.f));
+                        byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f/255.f));
+                        byteBuffer.putFloat(((val  & 0xFF) * (1.f/255.f)));
+                    }
+            inputFeature0.loadBuffer(byteBuffer);
+
+            // Runs model inference and gets result.
+            ModelUnquant.Outputs outputs = model.process(inputFeature0);
+            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+            float[] conifdences = outputFeature0.getFloatArray();
+            int maxPos = 0;
+            float maxConf = 0;
+            for(int i = 0; i < conifdences.length; i++) {
+                if(conifdences[i] > maxConf) {
+                    maxConf = conifdences[i];
+                    maxPos = i;
+                }
+            }
+            String[] classes = {"potato", "broccoli ", "human", "chicken", "bread"};
+            System.out.println(classes[maxPos]);
+            String s = "";
+            for(int i = 0; i < classes.length; i++) {
+                s+= String.format("%s: %.1f%%\n", classes[i], conifdences[i]*100);
+            }
+            System.out.println(s);
+            // Releases model resources if no longer used.
+            model.close();
+        } catch (IOException e) {
+            // TODO Handle the exception
+        }    }
 
 }

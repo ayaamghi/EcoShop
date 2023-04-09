@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
         if(imageCursor.moveToFirst()){
             @SuppressLint("Range") String fullPath = imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
             imageCursor.close();
+            System.out.println(fullPath);
             return fullPath;
         }else{
             return "";

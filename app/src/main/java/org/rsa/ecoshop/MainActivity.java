@@ -2,6 +2,7 @@ package org.rsa.ecoshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -157,4 +158,21 @@ public class MainActivity extends AppCompatActivity implements ImageAnalysis.Ana
         );
 
     }
+    /**
+     * Gets the last image id from the media store
+     * @return
+     */
+    private String getLastImageId(){
+        final String[] imageColumns = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
+        final String imageOrderBy = MediaStore.Images.Media._ID+" DESC";
+        Cursor imageCursor = managedQuery(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageColumns, null, null, imageOrderBy);
+        if(imageCursor.moveToFirst()){
+            String fullPath = imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            imageCursor.close();
+            return fullPath;
+        }else{
+            return "";
+        }
+    }
+
 }

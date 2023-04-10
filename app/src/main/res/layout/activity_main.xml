@@ -7,19 +7,20 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 tools:context=".MainActivity">
 
-<View
-    android:id="@+id/Background_camera"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/cardview_dark_background"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.0" />
+    <View
+        android:id="@+id/Background_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_dark_background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-<ImageButton
+    <ImageButton
     android:id="@+id/Help"
     android:layout_width="55dp"
     android:layout_height="55dp"
@@ -32,90 +33,29 @@ tools:context=".MainActivity">
     app:layout_constraintVertical_bias="0.042"
     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-<ImageButton
-    android:id="@+id/Settings"
-    android:layout_width="55dp"
-    android:layout_height="55dp"
-    android:contentDescription="Settings"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="@+id/Background_camera"
-    app:layout_constraintHorizontal_bias="0.063"
-    app:layout_constraintStart_toStartOf="@+id/Background_camera"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.043"
-    tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-<ImageButton
-    android:id="@+id/Green_Hands"
-    android:layout_width="55dp"
-    android:layout_height="55dp"
-    android:contentDescription="More Info"
-    app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
-    app:layout_constraintEnd_toStartOf="@+id/Help"
-    app:layout_constraintHorizontal_bias="0.824"
-    app:layout_constraintStart_toEndOf="@+id/Settings"
-    app:layout_constraintTop_toTopOf="@+id/Background_camera"
-    app:layout_constraintVertical_bias="0.042"
-    tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-<com.google.android.material.bottomnavigation.BottomNavigationView
-    android:id="@+id/Bottom_navigation"
-    android:layout_width="350dp"
-    android:layout_height="75dp"
-    android:background="@color/cardview_light_background"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.508"
-    app:layout_constraintStart_toStartOf="@+id/Background_camera"
-    app:layout_constraintTop_toTopOf="@+id/Background_camera"
-    app:layout_constraintVertical_bias="0.96">
-
     <ImageButton
-        android:id="@+id/History_tab"
+        android:id="@+id/Green_Hands"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="7.5dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="7.5dp"
-        android:contentDescription="Previous Lists"
+        android:layout_marginEnd="240dp"
+        android:contentDescription="More Info"
+        app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
+        app:layout_constraintEnd_toStartOf="@+id/Help"
+        app:layout_constraintTop_toTopOf="@+id/Background_camera"
+        app:layout_constraintVertical_bias="0.042"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <ImageButton
-        android:id="@+id/Flash"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="7.5dp"
-        android:layout_marginRight="150dp"
-        android:layout_marginBottom="7.5dp"
-        android:contentDescription="Flash"
+        android:id="@+id/Trip_List"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="616dp"
+        android:contentDescription="Trip List"
+        app:layout_constraintEnd_toEndOf="@+id/Background_camera"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="@+id/Background_camera"
+        app:layout_constraintTop_toTopOf="@+id/Background_camera"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-    <ImageButton
-        android:id="@+id/Upload_picture"
-        android:layout_width="56dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="7.5dp"
-        android:layout_marginRight="250dp"
-        android:layout_marginBottom="7.5dp"
-        android:contentDescription="Upload a Picture"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-</com.google.android.material.bottomnavigation.BottomNavigationView>
-
-<ImageButton
-    android:id="@+id/Trip_List"
-    android:layout_width="96dp"
-    android:layout_height="96dp"
-    android:contentDescription="Trip List"
-    app:layout_constraintBottom_toTopOf="@+id/Bottom_navigation"
-    app:layout_constraintEnd_toEndOf="@+id/Background_camera"
-    app:layout_constraintHorizontal_bias="0.05"
-    app:layout_constraintStart_toStartOf="@+id/Background_camera"
-    app:layout_constraintTop_toTopOf="@+id/Background_camera"
-    app:layout_constraintVertical_bias="0.951"
-    tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <Button
         android:id="@+id/bCapture"
@@ -138,5 +78,41 @@ tools:context=".MainActivity">
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/list_selector_background" />
+
+    <Button
+        android:id="@+id/addList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add To List"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/Product"
+        app:layout_constraintTop_toBottomOf="@+id/viewer"
+        tools:layout_editor_absoluteX="69dp" />
+
+    <Button
+        android:id="@+id/dontAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't Add"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/Product"
+        app:layout_constraintStart_toEndOf="@+id/Product"
+        app:layout_constraintTop_toBottomOf="@+id/viewer" />
+
+    <TextView
+        android:id="@+id/Product"
+        android:layout_width="51dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:text="thing"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/bCapture"
+        app:layout_constraintEnd_toStartOf="@+id/dontAdd"
+        app:layout_constraintStart_toEndOf="@+id/addList"
+        app:layout_constraintTop_toBottomOf="@+id/viewer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

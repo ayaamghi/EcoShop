@@ -1,40 +1,21 @@
 package org.rsa.ecoshop;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
-import androidx.camera.core.Preview;
-import androidx.camera.core.processing.SurfaceProcessorNode;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
-import androidx.core.content.ContextCompat;
 
-import com.google.common.util.concurrent.ListenableFuture;
-
-import org.rsa.ecoshop.ml.ModelUnquant;
 import org.rsa.ecoshop.ml.Modelt;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -42,59 +23,164 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button bCapture;
     ImageView imageView;
     int imageSize = 224;
-    int oddOrEven = 0;
-    String[] classes = new String[2];
+    ArrayList<String> classes = new ArrayList<>();
     ImageButton tripSummary;
-    public static int chickenCounter = 0;
-    int appleCounter = 0;
+    Button addList;
+    Button dontAdd;
+    TextView product;
+    static int chickenCounter;
+    static int appleCounter;
+    static int porkCounter;
+    static int chickenImpact;
+    static int porkImpact;
+    static int appleImpact;
+
+    static int chickensNotBought;
+    static int applesNotBought;
+    static int porkNotBought;
+
+    static int notBoughtChickenImpact;
+    static int notBoughtApplesImpact;
+    static int notBoughtPorkImpact;
+
+    int maxPos;
+    int[] impact = {26, 3, 100};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         bCapture = findViewById(R.id.bCapture);
-        bCapture.setText("Click to Scan");
-        imageView = findViewById(R.id.viewer);
         bCapture.setOnClickListener(this);
+
+        bCapture.setText("Click to Scan");
+
+        imageView = findViewById(R.id.viewer);
+
+
         tripSummary = findViewById(R.id.Trip_List);
         tripSummary.setOnClickListener(this);
-        }
 
+        addList = findViewById(R.id.addList);
+        addList.setOnClickListener(this);
+
+        dontAdd = findViewById(R.id.dontAdd);
+        dontAdd.setOnClickListener(this);
+
+        product = findViewById(R.id.Product);
+
+
+    }
+
+        //on click listeners
         @Override
         public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.Trip_List:
-                        counter(3);
+                        startActivity(new Intent(this, TripActivity.class));
                         break;
                     case R.id.bCapture:
-                        if ( oddOrEven % 2 == 0) {
                         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             startActivityForResult(cameraIntent, 1);
-                            oddOrEven++;
-                          //  bCapture.setText("CLick to Add to Cart");
+                            addList.setVisibility(View.VISIBLE);
+                            dontAdd.setVisibility(View.VISIBLE);
+                            product.setVisibility(View.VISIBLE);
                         } else {
                             //Request camera permission if we don't have it.
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                         }
-                    }
-                    else {
-                            oddOrEven--;
-                            bCapture.setText("Click to Scan");
-                        }
                     break;
+                    case R.id.addList:
+                        counter(maxPos);
+                        addList.setVisibility(View.INVISIBLE);
+                        dontAdd.setVisibility(View.INVISIBLE);
+                        break;
+                    case R.id.dontAdd:
+                        notBoughtCounter(0);
+                        addList.setVisibility(View.INVISIBLE);
+                        dontAdd.setVisibility(View.INVISIBLE);
+                        break;
                 }
         }
+    //increments how many of each product has been on shopping list
+    public void counter(int position) {
+        //TODO add carbon impacts from kaggle dataset https://www.kaggle.com/datasets/selfvivek/environment-impact-of-food-production
+        switch(position) {
+            case 0:
+                chickenCounter++;
+                chickenImpact = chickenCounter*impact[position];
+                break;
+          //  case 1:
+           //     chickensNotBought++;
+           //     notBoughtChickenImpact = chickensNotBought*impact[position-1];
+           //     break;
+            case 1:
+                appleCounter++;
+                appleImpact = appleCounter * impact[position];
+                break;
+            case 2:
+                porkCounter++;
+                porkImpact = porkCounter * impact[position];
+          //  case 3:
+           //     notBoughtApplesImpact++;
+            //    appleImpact = applesNotBought * impact[position-2];//the next item to add to the list would be -3, the one after thats notbought case would be -4, etc
+            //    break;
+            //TODO add additional cases corresponding with each position
+
+        }
+
+
+    }
+    public void notBoughtCounter(int position){
+        applesNotBought++;
+        notBoughtApplesImpact = applesNotBought*3;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //calls classifyimage - sourced from //TODO source if needed
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            int dimension = Math.min(image.getWidth(), image.getHeight());
+            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+            imageView.setImageBitmap(image);
+            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+             classifyImage(image);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    //TODO Source if needed- but also autogenerated code
     public void classifyImage(Bitmap image) {
         try {
-            Modelt model = Modelt.newInstance(getApplicationContext());
+            Modelt model = Modelt.newInstance(getApplicationContext()); //Modelt is name of specific file with .tflite extension that contains model
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -122,69 +208,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Modelt.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
-            float[] confidences = outputFeature0.getFloatArray();
-            // find the index of the class with the biggest confidence.
-            int maxPos = 0;
+            //iterates over entire array of floats-- prevents nullpointerexception when changing between models
+            ArrayList<Float>  confidences = new ArrayList<>();
+            for (float v : outputFeature0.getFloatArray()) {
+                confidences.add(v);
+            }
+
+            //finds max pos
+             maxPos = 0;
             float maxConfidence = 0;
-            for (int i = 0; i < confidences.length; i++) {
-                if (confidences[i] > maxConfidence) {
-                    maxConfidence = confidences[i];
+            for (int i = 0; i < confidences.size(); i++) {
+                if (confidences.get(i) > maxConfidence) {
+                    maxConfidence = confidences.get(i);
                     maxPos = i;
                 }
             }
-             classes[0] = "chicken";
-            classes[1] = "apple";
-            System.out.println(classes[maxPos]);
-            counter(maxPos);
+            //add class labels depending on model
+            classes.add("chicken");
+            classes.add("apple");
+            product.setText(classes.get(maxPos));
 
+
+            //prints out to system confidences- for debugging purposes
             String s = "";
-            for (int i = 0; i < classes.length; i++) {
-                s += String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
-            }
-            System.out.println(s);
-
+         try {
+             for (int i = 0; i < confidences.size(); i++) {
+                 s += String.format("%s: %.1f%%\n", classes.get(i), confidences.get(i) * 100);
+             }
+             System.out.println(s);
+         }
+         catch(Exception e) {
+            System.out.println("Something Went Wrong! Try again");
+         }
 
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
-            // TODO Handle the exception
+
         }
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            int dimension = Math.min(image.getWidth(), image.getHeight());
-            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-            imageView.setImageBitmap(image);
-
-            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-            classifyImage(image);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void counter(int position) {
-        int[] impact = {100, 10};
-
-        if(position < 3) {
-            if(position == 0) {
-                chickenCounter++;
-            }
-            else {
-                appleCounter++;
-            }
-        }
-        else {
-            Intent intent = new Intent(this, TripActivityReal.class);
-
-            intent.putExtra("key", chickenCounter + " chickens killed with a carbon footprint of " + chickenCounter*impact[0]);
-            intent.putExtra("apple", appleCounter + " apples bought");
-            startActivity(intent);
-        }
-
-
-    }
 }
+
+
+

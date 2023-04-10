@@ -1,8 +1,10 @@
 package org.rsa.ecoshop;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,10 +14,12 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
@@ -23,6 +27,7 @@ import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
+import androidx.camera.core.processing.SurfaceProcessorNode;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
@@ -30,6 +35,7 @@ import androidx.core.content.ContextCompat;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import org.rsa.ecoshop.ml.ModelUnquant;
+import org.rsa.ecoshop.ml.Modelt;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
@@ -39,186 +45,146 @@ import java.nio.ByteOrder;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
-public class MainActivity extends AppCompatActivity implements ImageAnalysis.Analyzer, View.OnClickListener {
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    PreviewView previewView;
-    private ImageCapture imageCapture;
     private Button bCapture;
     ImageView imageView;
-
+    int imageSize = 224;
+    int oddOrEven = 0;
+    String[] classes = new String[2];
+    ImageButton tripSummary;
+    public static int chickenCounter = 0;
+    int appleCounter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        previewView = findViewById(R.id.previewView);
         bCapture = findViewById(R.id.bCapture);
-    imageView = findViewById(R.id.viewer);
+        bCapture.setText("Click to Scan");
+        imageView = findViewById(R.id.viewer);
         bCapture.setOnClickListener(this);
-
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-        cameraProviderFuture.addListener(() -> {
-            try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                startCameraX(cameraProvider);
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }, getExecutor());
-
-    }
-
-    Executor getExecutor() {
-        return ContextCompat.getMainExecutor(this);
-    }
-
-    @SuppressLint("RestrictedApi")
-    private void startCameraX(ProcessCameraProvider cameraProvider) {
-        cameraProvider.unbindAll();
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
-        Preview preview = new Preview.Builder()
-                .build();
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
-
-        // Image capture use case
-        imageCapture = new ImageCapture.Builder()
-                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-                .build();
-
-        // Video capture use case
-
-        // Image analysis use case
-        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build();
-
-        imageAnalysis.setAnalyzer(getExecutor(), this);
-
-        //bind to lifecycle:
-        cameraProvider.bindToLifecycle( this, cameraSelector, preview, imageCapture);
-    }
-
-    @Override
-    public void analyze(@NonNull ImageProxy image) {
-        // image processing here for the current frame
-        Log.d("TAG", "analyze: got the frame at: " + image.getImageInfo().getTimestamp());
-        image.close();
-    }
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.bCapture:
-                capturePhoto();
-                break;
+        tripSummary = findViewById(R.id.Trip_List);
+        tripSummary.setOnClickListener(this);
         }
-    }
 
-    private void capturePhoto() {
-         final int RESULT_TAKE_PHOTO = 1;
-        Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        //   startActivityForResult(i, RESULT_TAKE_PHOTO);
-
-        long timestamp = System.currentTimeMillis();
-
-        ContentValues contentValues = new ContentValues();
-        //contentValues.put("yes", "flaskImage");
-    //   contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, timestamp);
-        //contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
-
-
-
-        imageCapture.takePicture(
-                new ImageCapture.OutputFileOptions.Builder(
-                        getContentResolver(),
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        contentValues
-                ).build(),
-                getExecutor(),
-                new ImageCapture.OnImageSavedCallback() {
-                    @Override
-                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                        Toast.makeText(MainActivity.this, "Photo has been saved successfully.", Toast.LENGTH_SHORT).show();
-                        Bitmap image = BitmapFactory.decodeFile(getLastImageId());
-                        int dimension = Math.min(image.getWidth(), image.getHeight());
-                        image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-                        image = Bitmap.createScaledBitmap(image, 224, 224, false);
-                        imageView.setImageBitmap(image);
-                        classifyImage(image);
+        @Override
+        public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.Trip_List:
+                        counter(3);
+                        break;
+                    case R.id.bCapture:
+                        if ( oddOrEven % 2 == 0) {
+                        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(cameraIntent, 1);
+                            oddOrEven++;
+                          //  bCapture.setText("CLick to Add to Cart");
+                        } else {
+                            //Request camera permission if we don't have it.
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+                        }
                     }
-
-                    @Override
-                    public void onError(@NonNull ImageCaptureException exception) {
-                        Toast.makeText(MainActivity.this, "Error saving photo: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                    else {
+                            oddOrEven--;
+                            bCapture.setText("Click to Scan");
+                        }
+                    break;
                 }
-        );
-
-    }
-    /**
-     * Gets the last image id from the media store
-     * @return
-     */
-    private String getLastImageId(){
-        final String[] imageColumns = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
-        final String imageOrderBy = MediaStore.Images.Media._ID+" DESC";
-        Cursor imageCursor = managedQuery(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageColumns, null, null, imageOrderBy);
-        if(imageCursor.moveToFirst()){
-            @SuppressLint("Range") String fullPath = imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            imageCursor.close();
-            System.out.println(fullPath);
-            return fullPath;
-        }else{
-            return "";
         }
-    }
-
-    private void classifyImage(Bitmap image) {
+    public void classifyImage(Bitmap image) {
         try {
-            ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+            Modelt model = Modelt.newInstance(getApplicationContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4*224*224*3);
+            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
-            int[] intValues = new int[224*224];
+
+            // get 1D array of 224 * 224 pixels in image
+            int[] intValues = new int[imageSize * imageSize];
             image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+
+            // iterate over pixels and extract R, G, and B values. Add to bytebuffer.
             int pixel = 0;
-                    for(int i = 0; i < 224; i++) {
-                        int val = intValues[pixel++];
-                        byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f/255.f));
-                        byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f/255.f));
-                        byteBuffer.putFloat(((val  & 0xFF) * (1.f/255.f)));
-                    }
+            for (int i = 0; i < imageSize; i++) {
+                for (int j = 0; j < imageSize; j++) {
+                    int val = intValues[pixel++]; // RGB
+                    byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f / 255.f));
+                    byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f / 255.f));
+                    byteBuffer.putFloat((val & 0xFF) * (1.f / 255.f));
+                }
+            }
+
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
-            ModelUnquant.Outputs outputs = model.process(inputFeature0);
+            Modelt.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-            float[] conifdences = outputFeature0.getFloatArray();
+
+            float[] confidences = outputFeature0.getFloatArray();
+            // find the index of the class with the biggest confidence.
             int maxPos = 0;
-            float maxConf = 0;
-            for(int i = 0; i < conifdences.length; i++) {
-                if(conifdences[i] > maxConf) {
-                    maxConf = conifdences[i];
+            float maxConfidence = 0;
+            for (int i = 0; i < confidences.length; i++) {
+                if (confidences[i] > maxConfidence) {
+                    maxConfidence = confidences[i];
                     maxPos = i;
                 }
             }
-            String[] classes = {"potato", "broccoli ", "human", "chicken", "bread"};
+             classes[0] = "chicken";
+            classes[1] = "apple";
             System.out.println(classes[maxPos]);
+            counter(maxPos);
+
             String s = "";
-            for(int i = 0; i < classes.length; i++) {
-                s+= String.format("%s: %.1f%%\n", classes[i], conifdences[i]*100);
+            for (int i = 0; i < classes.length; i++) {
+                s += String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
             }
             System.out.println(s);
+
+
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
             // TODO Handle the exception
-        }    }
+        }
+    }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            int dimension = Math.min(image.getWidth(), image.getHeight());
+            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+            imageView.setImageBitmap(image);
+
+            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+            classifyImage(image);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void counter(int position) {
+        int[] impact = {100, 10};
+
+        if(position < 3) {
+            if(position == 0) {
+                chickenCounter++;
+            }
+            else {
+                appleCounter++;
+            }
+        }
+        else {
+            Intent intent = new Intent(this, TripActivityReal.class);
+
+            intent.putExtra("key", chickenCounter + " chickens killed with a carbon footprint of " + chickenCounter*impact[0]);
+            intent.putExtra("apple", appleCounter + " apples bought");
+            startActivity(intent);
+        }
+
+
+    }
 }

@@ -117,37 +117,26 @@ tools:context=".MainActivity">
     app:layout_constraintVertical_bias="0.951"
     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-<androidx.camera.view.PreviewView
-    android:id="@+id/previewView"
-    android:layout_width="275dp"
-    android:layout_height="127dp"
-    android:layout_weight="90"
-    app:layout_constraintBottom_toTopOf="@+id/bCapture"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/Background_camera"
-    />
-
-<Button
-    android:id="@+id/bCapture"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Button"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.498"
-    app:layout_constraintStart_toStartOf="@+id/Background_camera"
-    app:layout_constraintTop_toTopOf="@+id/Background_camera"
-    app:layout_constraintVertical_bias="0.773" />
+    <Button
+        android:id="@+id/bCapture"
+        android:layout_width="126dp"
+        android:layout_height="51dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/Background_camera"
+        app:layout_constraintTop_toTopOf="@+id/Background_camera"
+        app:layout_constraintVertical_bias="0.773" />
 
     <ImageView
         android:id="@+id/viewer"
-        android:layout_width="155dp"
-        android:layout_height="131dp"
+        android:layout_width="375dp"
+        android:layout_height="208dp"
+        android:layout_marginBottom="208dp"
         app:layout_constraintBottom_toTopOf="@+id/bCapture"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/previewView"
         app:srcCompat="@android:drawable/list_selector_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

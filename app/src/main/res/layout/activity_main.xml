@@ -52,7 +52,7 @@ tools:context=".MainActivity">
         android:layout_marginTop="616dp"
         android:contentDescription="Trip List"
         app:layout_constraintEnd_toEndOf="@+id/Background_camera"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/Background_camera"
         app:layout_constraintTop_toTopOf="@+id/Background_camera"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -66,7 +66,7 @@ tools:context=".MainActivity">
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/Background_camera"
         app:layout_constraintTop_toTopOf="@+id/Background_camera"
-        app:layout_constraintVertical_bias="0.773" />
+        app:layout_constraintVertical_bias="0.766" />
 
     <ImageView
         android:id="@+id/viewer"
@@ -87,17 +87,20 @@ tools:context=".MainActivity">
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/Product"
         app:layout_constraintTop_toBottomOf="@+id/viewer"
-        tools:layout_editor_absoluteX="69dp" />
+        app:layout_constraintVertical_bias="0.626"
+        tools:layout_editor_absoluteX="57dp" />
 
     <Button
         android:id="@+id/dontAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:text="Don't Add"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/Product"
         app:layout_constraintStart_toEndOf="@+id/Product"
-        app:layout_constraintTop_toBottomOf="@+id/viewer" />
+        app:layout_constraintTop_toBottomOf="@+id/viewer"
+        app:layout_constraintVertical_bias="0.626" />
 
     <TextView
         android:id="@+id/Product"
@@ -106,13 +109,13 @@ tools:context=".MainActivity">
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
         android:text="thing"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/bCapture"
         app:layout_constraintEnd_toStartOf="@+id/dontAdd"
         app:layout_constraintStart_toEndOf="@+id/addList"
-        app:layout_constraintTop_toBottomOf="@+id/viewer" />
+        app:layout_constraintTop_toBottomOf="@+id/viewer"
+        app:layout_constraintVertical_bias="0.703" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

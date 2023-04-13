@@ -68,6 +68,30 @@
         app:srcCompat="@drawable/triplist" />
 
     <Button
+        android:id="@+id/greenhands"
+        android:layout_width="53dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="28dp"
+        android:text="Button"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/help"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <ImageView
+        android:id="@+id/Green_Hands"
+        android:layout_width="54dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@+id/greenhands"
+        app:layout_constraintEnd_toEndOf="@+id/greenhands"
+        app:layout_constraintStart_toStartOf="@+id/greenhands"
+        app:layout_constraintTop_toTopOf="@+id/greenhands"
+        app:srcCompat="@drawable/greenhands" />
+
+    <Button
         android:id="@+id/bCapture"
         android:layout_width="93dp"
         android:layout_height="50dp"
@@ -192,29 +216,5 @@
             android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/greenhands"
-        android:layout_width="53dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="28dp"
-        android:text="Button"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/help"
-        app:layout_constraintHorizontal_bias="0.008"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
-
-    <ImageView
-        android:id="@+id/Green_Hands"
-        android:layout_width="54dp"
-        android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="@+id/greenhands"
-        app:layout_constraintEnd_toEndOf="@+id/greenhands"
-        app:layout_constraintStart_toStartOf="@+id/greenhands"
-        app:layout_constraintTop_toTopOf="@+id/greenhands"
-        app:srcCompat="@drawable/greenhands" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

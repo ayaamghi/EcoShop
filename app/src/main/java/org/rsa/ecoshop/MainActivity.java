@@ -110,7 +110,7 @@ ImageButton greenHands;
         imageView = findViewById(R.id.viewer);
 
 
-        tripSummary = findViewById(R.id.Trip_List);
+        tripSummary = findViewById(R.id.Trip_list);
         tripSummary.setOnClickListener(this);
 
         addList = findViewById(R.id.addList);
@@ -121,10 +121,10 @@ ImageButton greenHands;
 
         product = findViewById(R.id.Product);
 
-        infoButton = findViewById(R.id.Help);
+        infoButton = findViewById(R.id.help);
         infoButton.setOnClickListener(this);
 
-        greenHands = findViewById(R.id.Green_Hands);
+        greenHands = findViewById(R.id.greenhands);
         greenHands.setOnClickListener(this);
     }
 

@@ -132,7 +132,7 @@ ImageButton greenHands;
         @Override
         public void onClick(View view) {
                 switch (view.getId()) {
-                    case R.id.Trip_List:
+                    case R.id.Trip_list:
                         startActivity(new Intent(this, TripActivity.class));
                         break;
                     case R.id.bCapture:
@@ -157,10 +157,10 @@ ImageButton greenHands;
                         addList.setVisibility(View.INVISIBLE);
                         dontAdd.setVisibility(View.INVISIBLE);
                         break;
-                    case R.id.Help:
+                    case R.id.help:
                         startActivity(new Intent(this, Info.class));
                         break;
-                    case R.id.Green_Hands:
+                    case R.id.greenhands:
                         startActivity(new Intent(this, GreenHands.class));
                         break;
                 }

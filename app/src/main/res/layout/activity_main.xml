@@ -15,80 +15,50 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
+    <ImageButton
         android:id="@+id/help"
-        android:layout_width="59dp"
+        android:layout_width="60dp"
         android:layout_height="54dp"
-        android:text="Button"
-        android:visibility="invisible"
+        android:background="#4CAF50"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
-
-    <ImageView
-        android:id="@+id/Help"
-        android:layout_width="60dp"
-        android:layout_height="54dp"
-        app:layout_constraintBottom_toBottomOf="@+id/help"
-        app:layout_constraintEnd_toEndOf="@+id/help"
-        app:layout_constraintStart_toStartOf="@+id/help"
-        app:layout_constraintTop_toTopOf="@+id/help"
+        app:layout_constraintVertical_bias="0.044"
         app:srcCompat="@drawable/info" />
 
-    <Button
+    <ImageButton
         android:id="@+id/Trip_list"
         android:layout_width="77dp"
-        android:layout_height="71dp"
-        android:text="Button"
-        android:visibility="invisible"
+        android:layout_height="69dp"
+        android:background="#4CAF50"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintHorizontal_bias="0.091"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
-
-    <ImageView
-        android:id="@+id/Trip_List"
-        android:layout_width="78dp"
-        android:layout_height="72dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/Trip_list"
-        app:layout_constraintEnd_toEndOf="@+id/Trip_list"
-        app:layout_constraintStart_toStartOf="@+id/Trip_list"
-        app:layout_constraintTop_toTopOf="@+id/Trip_list"
+        app:layout_constraintVertical_bias="0.959"
         app:srcCompat="@drawable/triplist" />
 
-    <Button
+    <ImageButton
         android:id="@+id/greenhands"
-        android:layout_width="53dp"
-        android:layout_height="54dp"
+        android:layout_width="54dp"
+        android:layout_height="57dp"
         android:layout_marginStart="28dp"
-        android:text="Button"
-        android:visibility="invisible"
+        android:background="#4CAF50"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/help"
-        app:layout_constraintHorizontal_bias="0.008"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
-
-    <ImageView
-        android:id="@+id/Green_Hands"
-        android:layout_width="54dp"
-        android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="@+id/greenhands"
-        app:layout_constraintEnd_toEndOf="@+id/greenhands"
-        app:layout_constraintStart_toStartOf="@+id/greenhands"
-        app:layout_constraintTop_toTopOf="@+id/greenhands"
+        app:layout_constraintVertical_bias="0.041"
         app:srcCompat="@drawable/greenhands" />
 
     <Button

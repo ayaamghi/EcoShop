@@ -21,17 +21,18 @@ tools:context=".MainActivity">
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-    android:id="@+id/Help"
-    android:layout_width="55dp"
-    android:layout_height="55dp"
-    android:contentDescription="Help"
-    app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.915"
-    app:layout_constraintStart_toStartOf="@+id/Background_camera"
-    app:layout_constraintTop_toTopOf="@+id/Background_camera"
-    app:layout_constraintVertical_bias="0.042"
-    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        android:id="@+id/Help"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:contentDescription="Help"
+        android:src="@drawable/info"
+        app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="@+id/Background_camera"
+        app:layout_constraintTop_toTopOf="@+id/Background_camera"
+        app:layout_constraintVertical_bias="0.042"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <ImageButton
         android:id="@+id/Green_Hands"
@@ -39,6 +40,7 @@ tools:context=".MainActivity">
         android:layout_height="55dp"
         android:layout_marginEnd="240dp"
         android:contentDescription="More Info"
+        android:src="@drawable/greenhands"
         app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
         app:layout_constraintEnd_toStartOf="@+id/Help"
         app:layout_constraintTop_toTopOf="@+id/Background_camera"
@@ -51,6 +53,7 @@ tools:context=".MainActivity">
         android:layout_height="96dp"
         android:layout_marginTop="616dp"
         android:contentDescription="Trip List"
+        android:src="@drawable/triplist"
         app:layout_constraintEnd_toEndOf="@+id/Background_camera"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/Background_camera"

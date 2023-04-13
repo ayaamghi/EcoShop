@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.rsa.ecoshop.ml.ModelFinal;
 import org.rsa.ecoshop.ml.Modelt;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -93,7 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int maxPos;
     int[] impact = {6, 0, 7, 1, 0, 1, 5, 60, 3, 12};
-
+    ImageButton infoButton;
+ImageButton greenHands;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -119,7 +121,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         product = findViewById(R.id.Product);
 
+        infoButton = findViewById(R.id.Help);
+        infoButton.setOnClickListener(this);
 
+        greenHands = findViewById(R.id.Green_Hands);
+        greenHands.setOnClickListener(this);
     }
 
         //on click listeners
@@ -147,19 +153,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         dontAdd.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.dontAdd:
-                        notBoughtCounter(0);
+                        counter(maxPos+9);
                         addList.setVisibility(View.INVISIBLE);
                         dontAdd.setVisibility(View.INVISIBLE);
+                        break;
+                    case R.id.Help:
+                        startActivity(new Intent(this, Info.class));
+                        break;
+                    case R.id.Green_Hands:
+                        startActivity(new Intent(this, GreenHands.class));
                         break;
                 }
         }
     //increments how many of each product has been on shopping list
 
     //i added the below part idk if it works tho -- idea is that something comes up if default in switch below below
-    public void
-            other = print(String "We are still working on it!")
+
     public void counter(int position) {
-        //TODO add carbon impacts from kaggle dataset https://www.kaggle.com/datasets/selfvivek/environment-impact-of-food-production
         switch(position) {
             case 0:
                 chickenCounter++;
@@ -201,128 +211,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 shrimpCounter++;
                 shrimpImpact = shrimpCounter * impact[position];
                 break;
-            //  case 1:
-            //     chickensNotBought++;
-            //     notBoughtChickenImpact = chickensNotBought*impact[position-1];
-            //     break;
             case 10:
                 chickensNotBought++;
-                notBoughtChickenImpact = chickensNotBought*impact[position-1];
+                notBoughtChickenImpact = chickensNotBought*impact[position-9];
                 break;
             case 11:
                 applesNotBought++;
-                notBoughtApplesImpact = applesNotBought*impact[position-2];
+                notBoughtApplesImpact = applesNotBought*impact[position-10];
                 break;
             case 12:
                 porkNotBought++;
-                notBoughtPorkImpact = porkNotBought*impact[position-3];
+                notBoughtPorkImpact = porkNotBought*impact[position-11];
                 break;
             case 13:
                 tomatoNotBought++;
-                notBoughtTomatoImpact = tomatoNotBought*impact[position-4];
+                notBoughtTomatoImpact = tomatoNotBought*impact[position-12];
                 break;
             case 14:
                 potatoNotBought++;
-                notBoughtPotatoImpact = potatoNotBought*impact[position-5];
+                notBoughtPotatoImpact = potatoNotBought*impact[position-13];
                 break;
             case 15:
                 peasNotBought++;
-                notBoughtPeasImpact = peasNotBought*impact[position-6];
+                notBoughtPeasImpact = peasNotBought*impact[position-14];
                 break;
             case 16:
                 fishNotBought++;
-                notBoughtFishImpact = fishNotBought*impact[position-7];
+                notBoughtFishImpact = fishNotBought*impact[position-15];
                 break;
             case 17:
                 beefNotBought++;
-                notBoughtBeefImpact = beefNotBought*impact[position-8];
+                notBoughtBeefImpact = beefNotBought*impact[position-16];
                 break;
             case 18:
                 milkNotBought++;
-                notBoughtMilkImpact = milkNotBought*impact[position-9];
+                notBoughtMilkImpact = milkNotBought*impact[position-17];
                 break;
             case 19:
                 shrimpNotBought++;
-                notBoughtShrimpImpact = shrimpNotBought*impact[position-10];
+                notBoughtShrimpImpact = shrimpNotBought*impact[position-18];
                 break;
-          //  case 3:
-           //     notBoughtApplesImpact++;
-            //    appleImpact = applesNotBought * impact[position-2];//the next item to add to the list would be -3, the one after thats notbought case would be -4, etc
-            //    break;
-            case 20:
-                notBoughtChickenImpact++;
-                chickenImpact=chickensNotBought * impact[position-1];
-                break;
-            case 21:
-                notBoughtApplesImpact++;
-                appleImpact=applesNotBought * impact[position-2];
-                break;
-            case 22:
-                notBoughtPorkImpact++;
-                porkImpact=porkNotBought * impact[position-3];
-                break;
-            case 23:
-                notBoughtTomatoImpact++;
-                tomatoImpact=tomatoNotBought * impact[position-4];
-                break;
-            case 24:
-                notBoughtPotatoImpact++;
-                potatoImpact=potatoNotBought * impact[position-5];
-                break;
-            case 25:
-                notBoughtPeasImpact++;
-                peasImpact=peasNotBought * impact[position-6];
-                break;
-            case 26:
-                notBoughtFishImpact++;
-                fishImpact=fishNotBought * impact[position-7];
-                break;
-            case 27:
-                notBoughtBeefImpact++;
-                beefImpact=beefNotBought * impact[position-8];
-                break;
-            case 28:
-                notBoughtMilkImpact++;
-                milkImpact=milkNotBought * impact[position-9];
-                break;
-            case 29:
-                notBoughtShrimpImpact++;
-                shrimpImpact=shrimpNotBought * impact[position-10];
-                break;
-            default:
-                other++;
-                break;
-
-            //TODO add additional cases corresponding with each position
-
         }
-
-
-    }
-    public void notBoughtCounter(int position){
-        applesNotBought++;
-        notBoughtApplesImpact = applesNotBought*3;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //calls classifyimage - sourced from //TODO source if needed
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -335,10 +266,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    //TODO Source if needed- but also autogenerated code
     public void classifyImage(Bitmap image) {
         try {
-            model_final model = model_final.newInstance(getApplicationContext()); //Modelt is name of specific file with .tflite extension that contains model
+            ModelFinal model = ModelFinal.newInstance(getApplicationContext()); //Modelt is name of specific file with .tflite extension that contains model
             //grr i cant figure this out its fine pls help
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -363,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
-            model_final.Outputs outputs = model.process(inputFeature0);
+            ModelFinal.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
             //here too its not working oops
 
@@ -393,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             classes.add("beef");
             classes.add("milk");
             classes.add("shrimp");
+            classes.add("other");
             product.setText(classes.get(maxPos));
 
 

@@ -3,20 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#4CAF50">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0" />
 
     <EditText
         android:id="@+id/main_heading_trip_list"
@@ -52,8 +54,8 @@
 
     <ImageView
         android:id="@+id/image_of_info_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="163dp"
+        android:layout_height="154dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +64,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.179"
         app:srcCompat="@drawable/info"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/info" />
 
     <Space
         android:id="@+id/space"
@@ -91,6 +93,7 @@
             android:id="@+id/header_helpful_tips"
             android:layout_width="match_parent"
             android:layout_height="68dp"
+            android:background="@color/teal_200"
             android:fontFamily="monospace"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"

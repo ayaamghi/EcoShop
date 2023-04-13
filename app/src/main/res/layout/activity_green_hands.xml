@@ -3,20 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#4CAF50">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0" />
 
     <EditText
         android:id="@+id/main_heading_trip"
@@ -52,15 +54,15 @@
 
     <ImageView
         android:id="@+id/img_greenhands"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="146dp"
+        android:layout_height="131dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.187"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintVertical_bias="0.205"
+        tools:srcCompat="@drawable/greenhands" />
 
     <Space
         android:id="@+id/space2"
@@ -77,11 +79,8 @@
         android:id="@+id/cardview_impact"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
         android:visibility="visible"
+        app:cardBackgroundColor="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +89,11 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="#FFFFFF"
             android:visibility="visible">
 
             <LinearLayout
@@ -103,6 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:background="@color/teal_200"
                     android:fontFamily="monospace"
                     android:text="Why is this Important?"
                     android:textAlignment="center"

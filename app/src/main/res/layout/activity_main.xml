@@ -1,124 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-tools:context=".MainActivity">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#4CAF50"
+    tools:context=".MainActivity">
 
     <View
         android:id="@+id/Background_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_dark_background"
+        android:background="#4CAF50"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
-        android:id="@+id/Help"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:contentDescription="Help"
-        android:src="@drawable/info"
-        app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
+    <Button
+        android:id="@+id/help"
+        android:layout_width="59dp"
+        android:layout_height="54dp"
+        android:text="Button"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toStartOf="@+id/Background_camera"
-        app:layout_constraintTop_toTopOf="@+id/Background_camera"
-        app:layout_constraintVertical_bias="0.042"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        app:layout_constraintHorizontal_bias="0.926"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
 
-    <ImageButton
-        android:id="@+id/Green_Hands"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="240dp"
-        android:contentDescription="More Info"
-        android:src="@drawable/greenhands"
-        app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
-        app:layout_constraintEnd_toStartOf="@+id/Help"
-        app:layout_constraintTop_toTopOf="@+id/Background_camera"
-        app:layout_constraintVertical_bias="0.042"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    <ImageView
+        android:id="@+id/help2"
+        android:layout_width="60dp"
+        android:layout_height="54dp"
+        app:layout_constraintBottom_toBottomOf="@+id/help"
+        app:layout_constraintEnd_toEndOf="@+id/help"
+        app:layout_constraintStart_toStartOf="@+id/help"
+        app:layout_constraintTop_toTopOf="@+id/help"
+        app:srcCompat="@drawable/info" />
 
-    <ImageButton
-        android:id="@+id/Trip_List"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="616dp"
-        android:contentDescription="Trip List"
-        android:src="@drawable/triplist"
-        app:layout_constraintEnd_toEndOf="@+id/Background_camera"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/Background_camera"
-        app:layout_constraintTop_toTopOf="@+id/Background_camera"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    <Button
+        android:id="@+id/Trip_list"
+        android:layout_width="77dp"
+        android:layout_height="71dp"
+        android:text="Button"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="78dp"
+        android:layout_height="72dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/Trip_list"
+        app:layout_constraintEnd_toEndOf="@+id/Trip_list"
+        app:layout_constraintStart_toStartOf="@+id/Trip_list"
+        app:layout_constraintTop_toTopOf="@+id/Trip_list"
+        app:srcCompat="@drawable/triplist" />
 
     <Button
         android:id="@+id/bCapture"
-        android:layout_width="126dp"
-        android:layout_height="51dp"
+        android:layout_width="93dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/Background_camera"
-        app:layout_constraintTop_toTopOf="@+id/Background_camera"
-        app:layout_constraintVertical_bias="0.766" />
+        app:layout_constraintTop_toBottomOf="@+id/Product"
+        app:layout_constraintVertical_bias="0.405" />
 
     <ImageView
         android:id="@+id/viewer"
         android:layout_width="375dp"
         android:layout_height="208dp"
-        android:layout_marginBottom="208dp"
-        app:layout_constraintBottom_toTopOf="@+id/bCapture"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.214"
         app:srcCompat="@android:drawable/list_selector_background" />
 
     <Button
         android:id="@+id/addList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="150dp"
         android:text="Add To List"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/Product"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewer"
-        app:layout_constraintVertical_bias="0.626"
-        tools:layout_editor_absoluteX="57dp" />
+        app:layout_constraintVertical_bias="0.384" />
 
     <Button
         android:id="@+id/dontAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="20dp"
         android:text="Don't Add"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/Product"
-        app:layout_constraintStart_toEndOf="@+id/Product"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewer"
-        app:layout_constraintVertical_bias="0.626" />
+        app:layout_constraintVertical_bias="0.39" />
 
     <TextView
         android:id="@+id/Product"
-        android:layout_width="51dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="130dp"
         android:text="thing"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/bCapture"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dontAdd"
         app:layout_constraintStart_toEndOf="@+id/addList"
         app:layout_constraintTop_toBottomOf="@+id/viewer"
-        app:layout_constraintVertical_bias="0.703" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="370dp"
+        android:layout_height="152dp"
+        app:layout_constraintBottom_toBottomOf="@+id/Background_camera"
+        app:layout_constraintEnd_toEndOf="@+id/Background_camera"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.592">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="monospace"
+            android:text="Things to do:"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="monospace"
+            android:text="Hit the scan button to take a picture!" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="monospace"
+            android:text="Hit trip list to look at your total history!"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="monospace"
+            android:text="Learn more about the environment and the impact of food production in the top right!"
+            android:textSize="14sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/greenhands"
+        android:layout_width="53dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="28dp"
+        android:text="Button"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/help"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="54dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@+id/greenhands"
+        app:layout_constraintEnd_toEndOf="@+id/greenhands"
+        app:layout_constraintStart_toStartOf="@+id/greenhands"
+        app:layout_constraintTop_toTopOf="@+id/greenhands"
+        app:srcCompat="@drawable/greenhands" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

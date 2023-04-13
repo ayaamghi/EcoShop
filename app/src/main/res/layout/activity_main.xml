@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="0.044" />
 
     <ImageView
-        android:id="@+id/help2"
+        android:id="@+id/Help"
         android:layout_width="60dp"
         android:layout_height="54dp"
         app:layout_constraintBottom_toBottomOf="@+id/help"
@@ -57,7 +57,7 @@
         app:layout_constraintVertical_bias="0.96" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/Trip_List"
         android:layout_width="78dp"
         android:layout_height="72dp"
         android:visibility="visible"
@@ -208,7 +208,7 @@
         app:layout_constraintVertical_bias="0.044" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/Green_Hands"
         android:layout_width="54dp"
         android:layout_height="56dp"
         app:layout_constraintBottom_toBottomOf="@+id/greenhands"

@@ -51,7 +51,7 @@ Button back;
         TextView beef = findViewById(R.id.beef_bought2);
         beef.setText(MainActivity.beefCounter +"  bought, CO2 emission of  " + MainActivity.beefImpact);
 
-        TextView milk = findViewById(R.id.milk_bought);
+        TextView milk = findViewById(R.id.milk_bought2);
         milk.setText(MainActivity.milkCounter +"  bought, CO2 emission of  " + MainActivity.milkImpact);
 
         TextView  shrimp = findViewById(R.id.shrimp_bought2);

@@ -63,8 +63,8 @@
 
     <Button
         android:id="@+id/bCapture"
-        android:layout_width="93dp"
-        android:layout_height="50dp"
+        android:layout_width="111dp"
+        android:layout_height="57dp"
         android:layout_marginStart="150dp"
         android:layout_marginEnd="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -116,10 +116,10 @@
 
     <TextView
         android:id="@+id/Product"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="82dp"
+        android:layout_height="52dp"
         android:layout_marginBottom="130dp"
-        android:text="thing"
+        android:text="Product"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"

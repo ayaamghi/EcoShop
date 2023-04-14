@@ -36,7 +36,7 @@ Button back;
         TextView pork = findViewById(R.id.pork_bought2);
         pork.setText(MainActivity.porkCounter +"  bought, CO2 emission of  " + MainActivity.porkImpact);
 
-        TextView tomatos = findViewById(R.id.tomatoes_bought);
+        TextView tomatos = findViewById(R.id.tomatoes_bought2);
         tomatos.setText(MainActivity.tomatoCounter +"  bought, CO2 emission of  " + MainActivity.tomatoImpact);
 
         TextView potat = findViewById(R.id.potatoes_bought2);
@@ -57,14 +57,16 @@ Button back;
         TextView  shrimp = findViewById(R.id.shrimp_bought2);
         shrimp.setText(MainActivity.shrimpCounter +"  bought, CO2 emission of  " + MainActivity.shrimpImpact);
 
+        TextView noChick = findViewById(R.id.chickens_NotBought12);
+        noChick.setText(MainActivity.chickensNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtChickenImpact);
 
-        TextView notBoughtApple = findViewById(R.id.apples_NotBought);
+        TextView notBoughtApple = findViewById(R.id.apples_NotBought2);
         notBoughtApple.setText(MainActivity.applesNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtApplesImpact);
 
         TextView notPork = findViewById(R.id.pork_Notbought2);
         notPork.setText(MainActivity.porkNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtPorkImpact);
 
-        TextView notTomato = findViewById(R.id.tomatoes_Notbought);
+        TextView notTomato = findViewById(R.id.tomatoes_Notbought2);
         notTomato.setText(MainActivity.tomatoNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtTomatoImpact);
 
         TextView notPot = findViewById(R.id.potatoes_Notbought2);

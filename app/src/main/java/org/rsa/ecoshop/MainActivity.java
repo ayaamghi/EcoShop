@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.rsa.ecoshop.ml.ModelFinal;
+import org.rsa.ecoshop.ml.ModelR;
 import org.rsa.ecoshop.ml.Modelt;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -44,12 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static int peasCounter;
     static int fishCounter;
 
-    static int beefCounter;
-
-    static int milkCounter;
-
-    static int shrimpCounter;
-
     static int chickenImpact;
     static int appleImpact;
     static int porkImpact;
@@ -58,11 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static int peasImpact;
     static int fishImpact;
 
-    static int beefImpact;
-
-    static int milkImpact;
-
-    static int shrimpImpact;
 
     static int chickensNotBought;
     static int applesNotBought;
@@ -72,12 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static int peasNotBought;
     static int fishNotBought;
 
-    static int beefNotBought;
-
-    static int milkNotBought;
-
-    static int shrimpNotBought;
-
     static int notBoughtChickenImpact;
     static int notBoughtApplesImpact;
     static int notBoughtPorkImpact;
@@ -86,14 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static int notBoughtPeasImpact;
     static int notBoughtFishImpact;
 
-    static int notBoughtBeefImpact;
-
-    static int notBoughtMilkImpact;
-
-    static int notBoughtShrimpImpact;
-
     int maxPos;
-    int[] impact = {6, 0, 7, 1, 0, 1, 5, 60, 3, 12};
+    int[] impact = {6, 0, 7, 1, 0, 1, 5};
     ImageButton infoButton;
 ImageButton greenHands;
     @Override
@@ -200,56 +178,32 @@ ImageButton greenHands;
                 fishImpact = fishCounter * impact[position];
                 break;
             case 7:
-                beefCounter++;
-                beefImpact = beefCounter * impact[position];
-                break;
-            case 8:
-                milkCounter++;
-                milkImpact = milkCounter * impact[position];
-                break;
-            case 9:
-                shrimpCounter++;
-                shrimpImpact = shrimpCounter * impact[position];
-                break;
-            case 10:
                 chickensNotBought++;
                 notBoughtChickenImpact = chickensNotBought*impact[position-9];
                 break;
-            case 11:
+            case 8:
                 applesNotBought++;
                 notBoughtApplesImpact = applesNotBought*impact[position-10];
                 break;
-            case 12:
+            case 9:
                 porkNotBought++;
                 notBoughtPorkImpact = porkNotBought*impact[position-11];
                 break;
-            case 13:
+            case 10:
                 tomatoNotBought++;
                 notBoughtTomatoImpact = tomatoNotBought*impact[position-12];
                 break;
-            case 14:
+            case 11:
                 potatoNotBought++;
                 notBoughtPotatoImpact = potatoNotBought*impact[position-13];
                 break;
-            case 15:
+            case 12:
                 peasNotBought++;
                 notBoughtPeasImpact = peasNotBought*impact[position-14];
                 break;
-            case 16:
+            case 13:
                 fishNotBought++;
                 notBoughtFishImpact = fishNotBought*impact[position-15];
-                break;
-            case 17:
-                beefNotBought++;
-                notBoughtBeefImpact = beefNotBought*impact[position-16];
-                break;
-            case 18:
-                milkNotBought++;
-                notBoughtMilkImpact = milkNotBought*impact[position-17];
-                break;
-            case 19:
-                shrimpNotBought++;
-                notBoughtShrimpImpact = shrimpNotBought*impact[position-18];
                 break;
         }
     }
@@ -268,7 +222,7 @@ ImageButton greenHands;
     }
     public void classifyImage(Bitmap image) {
         try {
-            ModelFinal model = ModelFinal.newInstance(getApplicationContext()); //Modelt is name of specific file with .tflite extension that contains model
+            ModelR model = ModelR.newInstance(getApplicationContext()); //Modelt is name of specific file with .tflite extension that contains model
             //grr i cant figure this out its fine pls help
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -293,7 +247,7 @@ ImageButton greenHands;
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
-            ModelFinal.Outputs outputs = model.process(inputFeature0);
+            ModelR.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
             //here too its not working oops
 
@@ -320,9 +274,6 @@ ImageButton greenHands;
             classes.add("potatoes");
             classes.add("peas");
             classes.add("fish");
-            classes.add("beef");
-            classes.add("milk");
-            classes.add("shrimp");
             classes.add("other");
             product.setText(classes.get(maxPos));
 

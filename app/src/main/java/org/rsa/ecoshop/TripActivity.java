@@ -48,15 +48,6 @@ Button back;
         TextView fish = findViewById(R.id.fish_bought2);
         fish.setText(MainActivity.fishCounter +"  bought, CO2 emission of  " + MainActivity.fishImpact);
 
-        TextView beef = findViewById(R.id.beef_bought2);
-        beef.setText(MainActivity.beefCounter +"  bought, CO2 emission of  " + MainActivity.beefImpact);
-
-        TextView milk = findViewById(R.id.milk_bought2);
-        milk.setText(MainActivity.milkCounter +"  bought, CO2 emission of  " + MainActivity.milkImpact);
-
-        TextView  shrimp = findViewById(R.id.shrimp_bought2);
-        shrimp.setText(MainActivity.shrimpCounter +"  bought, CO2 emission of  " + MainActivity.shrimpImpact);
-
         TextView noChick = findViewById(R.id.chickens_NotBought12);
         noChick.setText(MainActivity.chickensNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtChickenImpact);
 
@@ -77,15 +68,6 @@ Button back;
 
         TextView notFish = findViewById(R.id.fish_Notbought2);
         notFish.setText(MainActivity.fishNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtFishImpact);
-
-        TextView notBeef = findViewById(R.id.beef_Notbought2);
-        notBeef.setText(MainActivity.beefNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtBeefImpact);
-
-        TextView notMilk = findViewById(R.id.milk_Notbought);
-        notMilk.setText(MainActivity.milkNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtMilkImpact);
-
-        TextView  notShrimp = findViewById(R.id.shrimp_Notbought2);
-        notShrimp.setText(MainActivity.shrimpNotBought +" not bought, Co2 saving of " + MainActivity.notBoughtShrimpImpact);
     }
     @Override
     public void onClick(View view) {

@@ -116,8 +116,8 @@
 
     <TextView
         android:id="@+id/Product"
-        android:layout_width="82dp"
-        android:layout_height="52dp"
+        android:layout_width="99dp"
+        android:layout_height="54dp"
         android:layout_marginBottom="130dp"
         android:text="Product"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -170,7 +170,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="monospace"
-            android:text="Hit trip list to look at your total history!"
+            android:text="Hit trip list in the bottom left to look at your trip!"
             android:textSize="14sp" />
 
         <TextView
@@ -182,7 +182,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="monospace"
-            android:text="Learn more about the environment and the impact of food production in the top right!"
+            android:text="Learn more about the environment and the impact of food production in the top left!"
             android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>

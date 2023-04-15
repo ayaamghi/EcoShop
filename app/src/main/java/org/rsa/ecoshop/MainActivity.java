@@ -16,9 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.rsa.ecoshop.ml.ModelFinal;
 import org.rsa.ecoshop.ml.ModelR;
-import org.rsa.ecoshop.ml.Modelt;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
@@ -45,13 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static int peasCounter;
     static int fishCounter;
 
-    static int chickenImpact;
-    static int appleImpact;
-    static int porkImpact;
-    static int tomatoImpact;
-    static int potatoImpact;
-    static int peasImpact;
-    static int fishImpact;
+    static double chickenImpact;
+    static double appleImpact;
+    static double porkImpact;
+    static double tomatoImpact;
+    static double potatoImpact;
+    static double peasImpact;
+    static double fishImpact;
 
 
     static int chickensNotBought;
@@ -62,18 +60,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static int peasNotBought;
     static int fishNotBought;
 
-    static int notBoughtChickenImpact;
-    static int notBoughtApplesImpact;
-    static int notBoughtPorkImpact;
-    static int notBoughtTomatoImpact;
-    static int notBoughtPotatoImpact;
-    static int notBoughtPeasImpact;
-    static int notBoughtFishImpact;
+    static double notBoughtChickenImpact;
+    static double notBoughtApplesImpact;
+    static double notBoughtPorkImpact;
+    static double notBoughtTomatoImpact;
+    static double notBoughtPotatoImpact;
+    static double notBoughtPeasImpact;
+    static double notBoughtFishImpact;
 
     int maxPos;
-    int[] impact = {6, 0, 7, 1, 0, 1, 5};
     ImageButton infoButton;
 ImageButton greenHands;
+    double[] impact = {7.2, .3, 6.1, 1.4, .8, 5.1};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -131,7 +130,7 @@ ImageButton greenHands;
                         dontAdd.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.dontAdd:
-                        counter(maxPos+9);
+                        notCounter(maxPos);
                         addList.setVisibility(View.INVISIBLE);
                         dontAdd.setVisibility(View.INVISIBLE);
                         break;
@@ -146,8 +145,40 @@ ImageButton greenHands;
     //increments how many of each product has been on shopping list
 
     //i added the below part idk if it works tho -- idea is that something comes up if default in switch below below
-
+public void notCounter(int position){
+    switch(position){
+    case 0:
+    chickensNotBought++;
+    notBoughtChickenImpact = chickensNotBought*impact[position];
+    break;
+    case 1:
+    applesNotBought++;
+    notBoughtApplesImpact = applesNotBought*impact[position];
+    break;
+    case 2:
+    porkNotBought++;
+    notBoughtPorkImpact = porkNotBought*impact[position];
+    break;
+    case 3:
+    tomatoNotBought++;
+    notBoughtTomatoImpact = tomatoNotBought*impact[position];
+    break;
+    case 4:
+    potatoNotBought++;
+    notBoughtPotatoImpact = potatoNotBought*impact[position];
+    break;
+    case 5:
+    peasNotBought++;
+    notBoughtPeasImpact = peasNotBought*impact[position];
+    break;
+    case 6:
+    fishNotBought++;
+    notBoughtFishImpact = fishNotBought*impact[position];
+    break;
+}
+}
     public void counter(int position) {
+
         switch(position) {
             case 0:
                 chickenCounter++;
@@ -176,34 +207,6 @@ ImageButton greenHands;
             case 6:
                 fishCounter++;
                 fishImpact = fishCounter * impact[position];
-                break;
-            case 7:
-                chickensNotBought++;
-                notBoughtChickenImpact = chickensNotBought*impact[position-9];
-                break;
-            case 8:
-                applesNotBought++;
-                notBoughtApplesImpact = applesNotBought*impact[position-10];
-                break;
-            case 9:
-                porkNotBought++;
-                notBoughtPorkImpact = porkNotBought*impact[position-11];
-                break;
-            case 10:
-                tomatoNotBought++;
-                notBoughtTomatoImpact = tomatoNotBought*impact[position-12];
-                break;
-            case 11:
-                potatoNotBought++;
-                notBoughtPotatoImpact = potatoNotBought*impact[position-13];
-                break;
-            case 12:
-                peasNotBought++;
-                notBoughtPeasImpact = peasNotBought*impact[position-14];
-                break;
-            case 13:
-                fishNotBought++;
-                notBoughtFishImpact = fishNotBought*impact[position-15];
                 break;
         }
     }
@@ -249,34 +252,38 @@ ImageButton greenHands;
             // Runs model inference and gets result.
             ModelR.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-            //here too its not working oops
 
-            //iterates over entire array of floats-- prevents nullpointerexception when changing between models
+            //iterates over entire array of doubles-- prevents nullpointerexception when changing between models
             ArrayList<Float>  confidences = new ArrayList<>();
             for (float v : outputFeature0.getFloatArray()) {
                 confidences.add(v);
             }
 
             //finds max pos
-             maxPos = 0;
-            float maxConfidence = 0;
+            double maxConfidence = 0;
             for (int i = 0; i < confidences.size(); i++) {
                 if (confidences.get(i) > maxConfidence) {
                     maxConfidence = confidences.get(i);
                     maxPos = i;
                 }
             }
-            //add class labels depending on model
-            classes.add("chicken");
-            classes.add("apple");
-            classes.add("pork");
-            classes.add("tomatoes");
-            classes.add("potatoes");
-            classes.add("peas");
-            classes.add("fish");
-            classes.add("other");
-            product.setText(classes.get(maxPos));
 
+            //add class labels depending on model
+            classes.add("Pork");
+            classes.add("Apple");
+            classes.add("Chicken");
+            classes.add("Tomatoes");
+            classes.add("Potatoes");
+            classes.add("Peas");
+            classes.add("Fish");
+if(maxConfidence > .5) {
+    product.setText(classes.get(maxPos));
+}
+else {
+        product.setText("Please rescan!");
+        addList.setVisibility(View.INVISIBLE);
+        dontAdd.setVisibility(View.INVISIBLE);
+}
 
             //prints out to system confidences- for debugging purposes
             String s = "";
